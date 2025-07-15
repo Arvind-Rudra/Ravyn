@@ -16,11 +16,10 @@ export async function POST(request) {
       );
     }
 
-    // Verify JWT token
     let decoded;
     try {
       decoded = jwt.verify(token, process.env.NEXTAUTH_SECRET);
-    } catch (error) {
+    } catch {
       return NextResponse.json(
         { error: 'Invalid or expired verification token' },
         { status: 400 }
@@ -29,7 +28,6 @@ export async function POST(request) {
 
     await connectToDatabase();
 
-    // Find user by email and token
     const user = await User.findOne({
       email: decoded.email,
       verificationToken: token,
@@ -43,12 +41,10 @@ export async function POST(request) {
       );
     }
 
-    // Update user verification status
     user.emailVerified = true;
     user.verificationToken = undefined;
     user.emailVerifiedAt = new Date();
     user.updatedAt = new Date();
-
     await user.save();
 
     return NextResponse.json(
@@ -79,13 +75,12 @@ export async function GET(request) {
     const token = searchParams.get('token');
     const email = searchParams.get('email');
 
-    // Resend verification email
-    if (email && !token) {
-      await connectToDatabase();
+    await connectToDatabase();
 
-      const user = await User.findOne({ 
+    if (email && !token) {
+      const user = await User.findOne({
         email: email.toLowerCase(),
-        emailVerified: false 
+        emailVerified: false,
       });
 
       if (!user) {
@@ -95,19 +90,16 @@ export async function GET(request) {
         );
       }
 
-      // Generate new verification token
       const verificationToken = jwt.sign(
         { email: user.email },
         process.env.NEXTAUTH_SECRET,
         { expiresIn: '24h' }
       );
 
-      // Update user with new token
       user.verificationToken = verificationToken;
       user.updatedAt = new Date();
       await user.save();
 
-      // Send verification email
       try {
         await sendVerificationEmail(user.email, verificationToken);
         return NextResponse.json(
@@ -123,7 +115,6 @@ export async function GET(request) {
       }
     }
 
-    // Verify token from query params (for email links)
     if (token) {
       return await POST(request);
     }
@@ -134,10 +125,13 @@ export async function GET(request) {
     );
 
   } catch (error) {
-    console.error('Email verification error:', error);
+    console.error('Email verification GET error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
     );
   }
 }
+
+export { POST as defaultPOST, GET as defaultGET };
+export default { POST, GET };
