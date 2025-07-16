@@ -1,3 +1,4 @@
+// app/api/auth/[...nextauth]/route.js
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
@@ -5,9 +6,10 @@ import { MongoDBAdapter } from '@auth/mongodb-adapter';
 import bcrypt from 'bcryptjs';
 import { connectToDatabase } from '@/lib/mongodb';
 import User from '@/models/User';
+import clientPromise from '@/lib/mongodb-client';
 
 export const authOptions = {
-  adapter: MongoDBAdapter(connectToDatabase()),
+  adapter: MongoDBAdapter(clientPromise),
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -64,23 +66,37 @@ export const authOptions = {
           role: 'customer',
         };
       },
+      // Add this to allow account linking
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
-      if (account.provider === 'google') {
-        await connectToDatabase();
-        
-        try {
+      try {
+        if (account?.provider === 'google') {
+          await connectToDatabase();
+          
           // Check if user already exists
           const existingUser = await User.findOne({ 
             email: user.email.toLowerCase() 
           });
 
           if (existingUser) {
-            // Update existing user with Google info if not set
-            if (!existingUser.image && user.image) {
-              existingUser.image = user.image;
+            // Link the Google account to existing user
+            if (!existingUser.googleId) {
+              existingUser.googleId = profile.sub;
+              existingUser.provider = existingUser.provider || 'credentials'; // Keep original provider
+              
+              // Update image if not set
+              if (!existingUser.image && user.image) {
+                existingUser.image = user.image;
+              }
+              
+              // Ensure email is verified for Google users
+              if (!existingUser.emailVerified) {
+                existingUser.emailVerified = true;
+              }
+              
               await existingUser.save();
             }
             return true;
@@ -99,13 +115,13 @@ export const authOptions = {
 
           await newUser.save();
           return true;
-        } catch (error) {
-          console.error('Error in Google sign-in:', error);
-          return false;
         }
-      }
 
-      return true;
+        return true;
+      } catch (error) {
+        console.error('Error in sign-in callback:', error);
+        return false;
+      }
     },
     async jwt({ token, user, account }) {
       if (user) {
@@ -115,12 +131,16 @@ export const authOptions = {
 
       // Refresh user data on each request
       if (token.id) {
-        await connectToDatabase();
-        const dbUser = await User.findById(token.id);
-        if (dbUser) {
-          token.role = dbUser.role;
-          token.name = dbUser.name;
-          token.image = dbUser.image;
+        try {
+          await connectToDatabase();
+          const dbUser = await User.findById(token.id);
+          if (dbUser) {
+            token.role = dbUser.role;
+            token.name = dbUser.name;
+            token.image = dbUser.image;
+          }
+        } catch (error) {
+          console.error('Error refreshing user data:', error);
         }
       }
 
@@ -134,12 +154,6 @@ export const authOptions = {
       return session;
     },
   },
-  pages: {
-    signIn: '/login',
-    signUp: '/signup',
-    error: '/auth/error',
-    verifyRequest: '/auth/verify-request',
-  },
   session: {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -150,6 +164,6 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === 'development',
 };
-const handler = NextAuth(authOptions); 
 
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
