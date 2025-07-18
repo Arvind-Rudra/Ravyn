@@ -1,17 +1,21 @@
+'use client';
+
 import React, { useState } from 'react';
 import Image from 'next/image'
 import {
   Menu,
   X,
   Home,
-  Star,
+  Shirt,
   ShoppingBag,
   User,
-  Heart,
+  Watch,
+  Brush,
   Instagram,
   Twitter,
   Youtube,
 } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,29 +39,27 @@ export default function Sidebar() {
         {/* Logo */}
         <div className="mb-6">
             <Image src={`/logo1.png`} alt={'Ravyn Logo'} className="w-10 h-10 object-contain" width="64" height="64" />
-          {/* <img
-            src="public/logo.jpeg" // ← Replace this with the correct path to your image
-            alt="Ravyn Logo"
-            className="w-10 h-10 object-contain"
-          /> */}
         </div>
 
         {/* Icon Navigation */}
         <nav className="flex flex-col gap-6 items-center">
-          <a href="#" className="hover:text-yellow-400 transition-colors">
+          <Link href="/" className="hover:text-yellow-400 transition-colors">
             <Home size={20} />
-          </a>
-          <a href="#" className="hover:text-yellow-400 transition-colors">
-            <Star size={20} />
-          </a>
+          </Link>
+          <Link href="/shop/products/clothing" className="hover:text-yellow-400 transition-colors">
+            <Shirt size={20} />
+          </Link>
+          <Link href="/shop/products/makeup" className="hover:text-yellow-400 transition-colors">
+            <Brush size={20} />
+          </Link>
+          <Link href="/shop/products/accessories" className="hover:text-yellow-400 transition-colors">
+            <Watch size={20} />
+          </Link>
           <a href="#" className="hover:text-yellow-400 transition-colors">
             <ShoppingBag size={20} />
           </a>
           <a href="#" className="hover:text-yellow-400 transition-colors">
             <User size={20} />
-          </a>
-          <a href="#" className="hover:text-yellow-400 transition-colors">
-            <Heart size={20} />
           </a>
         </nav>
 

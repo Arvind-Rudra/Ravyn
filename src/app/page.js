@@ -103,7 +103,7 @@ export default function Home() {
           </div>
 
           <div className="relative z-10 md:ml-16">
-            <Sidebar />
+            {/* <Sidebar /> */}
             <Footer />
           </div>
         </>

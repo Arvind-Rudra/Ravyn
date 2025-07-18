@@ -21,6 +21,13 @@ body{
 }
 
 
+:root {
+  --color-jetblack: #121212;
+  --color-electricred: #FF3B30;
+  --color-cyberyellow: #FFD500;
+  --color-electricblue: #3D5AFE;
+  --color-typography: #FAFAFA;
+}
 
   
   
