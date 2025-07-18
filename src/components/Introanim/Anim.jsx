@@ -140,12 +140,13 @@ const SplitText = ({
   return (
     <p
       ref={ref}
-      className={`split-parent inline-block overflow-hidden whitespace-normal font-extrabold tracking-tight text-5xl md:text-8xl text-[#FAFAFA] ${className}`}
+      className={`split-parent inline-block p-1 overflow-hidden whitespace-normal font-extralight tracking-tight text-5xl md:text-8xl text-[#FAFAFA] ${className}`}
       style={{
         textAlign,
         wordWrap: 'break-word',
         visibility: 'hidden',
         backgroundColor: 'transparent', // ✅ Explicit transparent background
+        fontFamily: 'Zoredo Blocker Line',
       }}
     >
       {text}

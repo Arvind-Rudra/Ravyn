@@ -34,7 +34,7 @@ export default function Sidebar() {
       >
         {/* Logo */}
         <div className="mb-6">
-            <Image src={`/logo.png`} alt={'Ravyn Logo'} className="w-10 h-10 object-contain" width="64" height="64" />
+            <Image src={`/logo1.png`} alt={'Ravyn Logo'} className="w-10 h-10 object-contain" width="64" height="64" />
           {/* <img
             src="public/logo.jpeg" // ← Replace this with the correct path to your image
             alt="Ravyn Logo"
