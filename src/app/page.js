@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import Image from 'next/image';
-import Sidebar from '@/components/layout/Sidebar';
 import Footer from '@/components/layout/Footer';
 import Particles from "@/components/background/Particals";
 import SplitText from '@/components/Introanim/Anim';
@@ -35,6 +34,16 @@ export default function Home() {
   };
 
   useEffect(() => {
+    // Check if intro animation has already been shown today
+    const lastShown = localStorage.getItem('ravyn_intro_date');
+    const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+
+    if (lastShown === today) {
+      setDone(true); // Skip animation
+    }
+  }, []);
+
+  useEffect(() => {
     if (showLogo && logoRef.current) {
       const tl = gsap.timeline();
 
@@ -50,7 +59,11 @@ export default function Home() {
           duration: 0.3,
           ease: 'power2.inOut',
           delay: 0.2,
-          onComplete: () => setDone(true),
+          onComplete: () => {
+            // Store today's date in localStorage
+            localStorage.setItem('ravyn_intro_date', new Date().toISOString().split('T')[0]);
+            setDone(true);
+          }
         }
       );
     }
@@ -60,11 +73,13 @@ export default function Home() {
     <>
       {!done ? (
         <>
-          <div className="fixed inset-0 -z-10">
+          {/* Silk background */}
+          <div className="fixed inset-0 z-40">
             <Silk speed={5} scale={1} color="#5A5561" noiseIntensity={1.5} rotation={0} />
           </div>
 
-          <div className="flex items-center justify-center h-screen bg-transparent">
+          {/* Foreground content */}
+          <div className="flex items-center justify-center h-screen bg-transparent z-50 relative">
             {!showLogo ? (
               <SplitText
                 key={index}
@@ -93,7 +108,8 @@ export default function Home() {
         </>
       ) : (
         <>
-          <div className="fixed  inset-0 -z-10">
+          {/* Background Particles */}
+          <div className="fixed inset-0 -z-10">
             <Particles
               particleColors={['#FAFAFA', '#FAFAFA']}
               particleCount={200}
@@ -106,15 +122,14 @@ export default function Home() {
             />
           </div>
 
+          {/* Main Content */}
           <div className="relative z-10 md:ml-16">
-            
-            <HeroSection/>
+            <HeroSection />
             <SignupPromptSection />
             <div className="px-4 md:px-16">
               <FeaturedSection />
             </div>
             <OffersSection />
-            
             <Footer />
           </div>
         </>

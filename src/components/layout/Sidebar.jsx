@@ -26,7 +26,7 @@ export default function Sidebar() {
       {/* Toggle Button (Mobile only) */}
       <button
         onClick={toggleSidebar}
-        className="fixed top-4 left-4 z-50 p-2 bg-transparent text-white rounded-md hover:bg-zinc-800 md:hidden"
+        className="fixed top-4 left-4 z-10 p-2 bg-transparent text-white rounded-md hover:bg-zinc-800 md:hidden"
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
@@ -43,16 +43,16 @@ export default function Sidebar() {
 
         {/* Icon Navigation */}
         <nav className="flex flex-col gap-6 items-center">
-          <Link href="/" className="hover:text-yellow-400 transition-colors">
+          <Link rel="preload" href="/" className="hover:text-yellow-400 transition-colors">
             <Home size={20} />
           </Link>
-          <Link href="/shop/products/clothing" className="hover:text-yellow-400 transition-colors">
+          <Link rel="preload" href="/shop/products/clothing" className="hover:text-yellow-400 transition-colors">
             <Shirt size={20} />
           </Link>
-          <Link href="/shop/products/makeup" className="hover:text-yellow-400 transition-colors">
+          <Link rel="preload" href="/shop/products/skincare" className="hover:text-yellow-400 transition-colors">
             <Brush size={20} />
           </Link>
-          <Link href="/shop/products/accessories" className="hover:text-yellow-400 transition-colors">
+          <Link rel="preload" href="/shop/products/accessories" className="hover:text-yellow-400 transition-colors">
             <Watch size={20} />
           </Link>
           <a href="#" className="hover:text-yellow-400 transition-colors">
