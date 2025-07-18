@@ -16,7 +16,7 @@ export default function SkewButton({
         bg-[#FF3B30] text-[#FAFAFA]
         rounded-[0.625em] font-bold
         cursor-pointer overflow-hidden group z-[1]
-        transition-colors duration-500
+        transition-all duration-500
         ${className}
       `}
       style={{
@@ -27,9 +27,19 @@ export default function SkewButton({
       }}
       {...props}
     >
-      <span className="relative z-10 group-hover:text-[#121212] transition-colors duration-500">
+      {/* Text */}
+      <span
+        className="
+          relative z-10
+          transition-all duration-500 ease-in-out
+          opacity-90 group-hover:opacity-100
+          group-hover:text-[#121212]
+        "
+      >
         {children}
       </span>
+
+      {/* Background Animation */}
       <span
         className="
           absolute top-0 bottom-0 left-[-20%] right-[-20%]
@@ -43,9 +53,3 @@ export default function SkewButton({
     </button>
   );
 }
-
-
-
-
-
-

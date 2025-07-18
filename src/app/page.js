@@ -8,6 +8,10 @@ import Footer from '@/components/layout/Footer';
 import Particles from "@/components/background/Particals";
 import SplitText from '@/components/Introanim/Anim';
 import Silk from '@/components/background/Silk';
+import HeroSection from '@/components/layout/Hero';
+import FeaturedSection from '@/components/layout/FeaturedSection';
+import OffersSection from '@/components/layout/OffersSection';
+import SignupPromptSection from '@/components/ui/SignupLoginPopup';
 
 export default function Home() {
   const texts = [
@@ -89,7 +93,7 @@ export default function Home() {
         </>
       ) : (
         <>
-          <div className="absolute inset-0 -z-10">
+          <div className="fixed  inset-0 -z-10">
             <Particles
               particleColors={['#FAFAFA', '#FAFAFA']}
               particleCount={200}
@@ -103,7 +107,14 @@ export default function Home() {
           </div>
 
           <div className="relative z-10 md:ml-16">
-            {/* <Sidebar /> */}
+            
+            <HeroSection/>
+            <SignupPromptSection />
+            <div className="px-4 md:px-16">
+              <FeaturedSection />
+            </div>
+            <OffersSection />
+            
             <Footer />
           </div>
         </>
