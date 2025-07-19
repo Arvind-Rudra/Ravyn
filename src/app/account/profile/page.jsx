@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { User, Mail, Phone, MapPin, Calendar, Edit3, Save, X, Camera } from 'lucide-react';
+import SkewButton from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
 
 export default function Profile ()  {
   const [isEditing, setIsEditing] = useState(false);
@@ -10,7 +12,6 @@ export default function Profile ()  {
     email: 'alex.chen@cybercorp.net',
     phone: '+1 (555) 987-6543',
     location: 'Neo Tokyo, Japan',
-    joinDate: 'March 2024',
     bio: 'Full-stack developer passionate about cybersecurity and AI. Building the future one line of code at a time.',
     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face'
   });
@@ -41,10 +42,7 @@ export default function Profile ()  {
 
   return (
     <div className="min-h-screen p-6 bg-transparent">
-      {/* Cyber Grid Background */}
-
       <div className="relative max-w-4xl mx-auto">
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 style={{ fontFamily: 'Zoredo Blocker' }} className="text-4xl font-bold text-white mb-2 tracking-wider">
             USER PROFILE
@@ -52,12 +50,9 @@ export default function Profile ()  {
           <div className="w-24 h-1 mx-auto" style={{ backgroundColor: '#FFD500' }}></div>
         </div>
 
-        {/* Main Profile Card */}
         <div className="bg-black/40 backdrop-blur-sm rounded-lg border border-gray-800 shadow-2xl overflow-hidden">
-          {/* Profile Header */}
           <div className="relative p-8 border-b border-gray-800" style={{ background: 'linear-gradient(135deg, #121212 0%, #1a1a1a 100%)' }}>
             <div className="flex flex-col md:flex-row items-center gap-6">
-              {/* Avatar */}
               <div className="relative group">
                 <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-gray-700 shadow-lg">
                   <img 
@@ -74,67 +69,54 @@ export default function Profile ()  {
                 </div>
               </div>
 
-              {/* Basic Info */}
               <div className="flex-1 text-center md:text-left">
                 {isEditing ? (
-                  <input
+                  <Input
                     type="text"
                     value={editedProfile.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
-                    className="text-3xl font-bold bg-transparent border-b-2 border-gray-600 text-white focus:border-yellow-500 outline-none mb-2 w-full max-w-xs"
-                    style={{ borderColor: '#FFD500' }}
+                    className="text-3xl font-bold text-white mb-2 w-full max-w-xs"
                   />
                 ) : (
                   <h2 className="text-3xl font-bold text-white mb-2">{profile.name}</h2>
                 )}
-                <p className="text-gray-400 mb-4">Senior Developer • Level 47</p>
-                
-                {/* Action Buttons */}
+
                 <div className="flex gap-3 justify-center md:justify-start">
                   {isEditing ? (
                     <>
-                      <button
+                      <SkewButton fontSize={'0.875rem'}
                         onClick={handleSave}
                         className="flex items-center gap-2 px-6 py-2 rounded-lg font-medium text-white transition-all duration-300 hover:shadow-lg hover:scale-105"
-                        style={{ backgroundColor: '#3D5AFE' }}
-                      >
-                        <Save className="w-4 h-4" />
-                        SAVE
-                      </button>
-                      <button
+                        style={{ backgroundColor: '#3D5AFE' }}>
+                        <Save className="w-4 h-4" /> SAVE
+                      </SkewButton>
+                      <SkewButton fontSize={'0.875rem'}
                         onClick={handleCancel}
                         className="flex items-center gap-2 px-6 py-2 rounded-lg font-medium text-white border border-gray-600 hover:border-red-500 transition-all duration-300"
-                        style={{ backgroundColor: '#FF3B30' }}
-                      >
-                        <X className="w-4 h-4" />
-                        CANCEL
-                      </button>
+                        style={{ backgroundColor: '#FF3B30' }}>
+                        <X className="w-4 h-4" /> CANCEL
+                      </SkewButton>
                     </>
                   ) : (
-                    <button
+                    <SkewButton fontSize={'0.875rem'} width={'200px'}
                       onClick={handleEdit}
-                      className="flex items-center gap-2 px-6 py-2 rounded-lg font-medium text-white transition-all duration-300 hover:shadow-lg hover:scale-105"
-                      style={{ backgroundColor: '#3D5AFE' }}
-                    >
-                      <Edit3 className="w-4 h-4" />
-                      UPDATE PROFILE
-                    </button>
+                      className="flex items-center gap-2 px-4 md:px-6 py-2 rounded-lg font-medium text-white text-sm"
+                      style={{ backgroundColor: '#3D5AFE' }}>
+                      <Edit3 className="w-4 h-4" /> UPDATE PROFILE
+                    </SkewButton>
                   )}
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Profile Details */}
           <div className="p-8">
             <div className="grid md:grid-cols-2 gap-8">
-              {/* Contact Information */}
               <div className="space-y-6">
                 <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                   <div className="w-1 h-6" style={{ backgroundColor: '#FFD500' }}></div>
                   CONTACT DATA
                 </h3>
-                
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#FF3B30' }}>
@@ -143,11 +125,10 @@ export default function Profile ()  {
                     <div className="flex-1">
                       <p className="text-gray-400 text-sm">Email</p>
                       {isEditing ? (
-                        <input
+                        <Input
                           type="email"
                           value={editedProfile.email}
                           onChange={(e) => handleInputChange('email', e.target.value)}
-                          className="bg-transparent border-b border-gray-600 text-white focus:border-yellow-500 outline-none w-full"
                         />
                       ) : (
                         <p className="text-white font-medium">{profile.email}</p>
@@ -162,11 +143,10 @@ export default function Profile ()  {
                     <div className="flex-1">
                       <p className="text-gray-400 text-sm">Phone</p>
                       {isEditing ? (
-                        <input
+                        <Input
                           type="tel"
                           value={editedProfile.phone}
                           onChange={(e) => handleInputChange('phone', e.target.value)}
-                          className="bg-transparent border-b border-gray-600 text-white focus:border-yellow-500 outline-none w-full"
                         />
                       ) : (
                         <p className="text-white font-medium">{profile.phone}</p>
@@ -181,37 +161,25 @@ export default function Profile ()  {
                     <div className="flex-1">
                       <p className="text-gray-400 text-sm">Location</p>
                       {isEditing ? (
-                        <input
+                        <Input
                           type="text"
                           value={editedProfile.location}
                           onChange={(e) => handleInputChange('location', e.target.value)}
-                          className="bg-transparent border-b border-gray-600 text-white focus:border-yellow-500 outline-none w-full"
                         />
                       ) : (
                         <p className="text-white font-medium">{profile.location}</p>
                       )}
                     </div>
                   </div>
-
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#FF3B30' }}>
-                      <Calendar className="w-5 h-5 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-gray-400 text-sm">Member Since</p>
-                      <p className="text-white font-medium">{profile.joinDate}</p>
-                    </div>
-                  </div>
                 </div>
               </div>
 
-              {/* Bio Section */}
               <div className="space-y-6">
                 <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                   <div className="w-1 h-6" style={{ backgroundColor: '#FFD500' }}></div>
                   BIO DATA
                 </h3>
-                
+
                 <div className="p-6 rounded-lg border border-gray-700" style={{ backgroundColor: '#1a1a1a' }}>
                   {isEditing ? (
                     <textarea
@@ -226,29 +194,10 @@ export default function Profile ()  {
                   )}
                 </div>
 
-                {/* Stats */}
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="text-center p-4 rounded-lg border border-gray-700" style={{ backgroundColor: '#1a1a1a' }}>
-                    <div className="text-2xl font-bold" style={{ color: '#FFD500' }}>47</div>
-                    <p className="text-gray-400 text-sm">Level</p>
-                  </div>
-                  <div className="text-center p-4 rounded-lg border border-gray-700" style={{ backgroundColor: '#1a1a1a' }}>
-                    <div className="text-2xl font-bold" style={{ color: '#FFD500' }}>1.2K</div>
-                    <p className="text-gray-400 text-sm">Points</p>
-                  </div>
-                  <div className="text-center p-4 rounded-lg border border-gray-700" style={{ backgroundColor: '#1a1a1a' }}>
-                    <div className="text-2xl font-bold" style={{ color: '#FFD500' }}>89%</div>
-                    <p className="text-gray-400 text-sm">Progress</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Footer */}
-        <div className="text-center mt-8 text-gray-500">
-          <p>SECURE CONNECTION • ENCRYPTED DATA • NEURAL NETWORK PROTECTED</p>
         </div>
       </div>
     </div>
