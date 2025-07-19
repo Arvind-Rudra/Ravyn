@@ -178,11 +178,13 @@ export default function Login() {
                 Reset Access?
               </button>
             </div>
+              <div className='flex items-center justify-between'>
 
-            <SkewButton width={'400px'}
+            <SkewButton width={'350px'}
               onClick={handleLogin} disabled={isLoading || isLocked} className="w-full text-center">
-              {isLocked ? `SYSTEM LOCKED (${lockTimeRemaining}s)` : isLoading ? 'CONNECTING...' : 'ESTABLISH CONNECTION'}
+              {isLocked ? `SYSTEM LOCKED (${lockTimeRemaining}s)` : isLoading ? 'CONNECTING...' : 'Login'}
             </SkewButton>
+            </div>
 
 
           </div>

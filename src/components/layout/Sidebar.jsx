@@ -58,9 +58,9 @@ export default function Sidebar() {
           <a href="#" className="hover:text-yellow-400 transition-colors">
             <ShoppingBag size={20} />
           </a>
-          <a href="#" className="hover:text-yellow-400 transition-colors">
+          <Link rel="preload" href="/account/profile" className="hover:text-yellow-400 transition-colors">
             <User size={20} />
-          </a>
+          </Link>
         </nav>
 
         {/* Spacer */}
