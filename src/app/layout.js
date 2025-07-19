@@ -1,5 +1,6 @@
 import Sidebar from "@/components/layout/Sidebar";
 import "./globals.css";
+import Particles from "@/components/background/Particals";
 
 export const metadata = {
   title: "Create Next App",
@@ -10,8 +11,24 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Sidebar />
-        {children}
+        <div className="fixed inset-0 -z-10">
+          <Particles
+            particleColors={['#FAFAFA', '#FAFAFA']}
+            particleCount={200}
+            particleSpread={10}
+            speed={0.1}
+            particleBaseSize={100}
+            moveParticlesOnHover
+            alphaParticles={false}
+            disableRotation={false}
+          />
+        </div>
+
+        {/* Main Content */}
+        <div className="relative z-10 md:ml-16">
+          <Sidebar />
+          {children}
+        </div>
       </body>
     </html>
   );
