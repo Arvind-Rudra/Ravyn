@@ -109,21 +109,8 @@ export default function Home() {
       ) : (
         <>
           {/* Background Particles */}
-          <div className="fixed inset-0 -z-10">
-            <Particles
-              particleColors={['#FAFAFA', '#FAFAFA']}
-              particleCount={200}
-              particleSpread={10}
-              speed={0.1}
-              particleBaseSize={100}
-              moveParticlesOnHover
-              alphaParticles={false}
-              disableRotation={false}
-            />
-          </div>
 
           {/* Main Content */}
-          <div className="relative z-10 md:ml-16">
             <HeroSection />
             <SignupPromptSection />
             <div className="px-4 md:px-16">
@@ -131,7 +118,6 @@ export default function Home() {
             </div>
             <OffersSection />
             <Footer />
-          </div>
         </>
       )}
     </>
