@@ -28,8 +28,8 @@ export default function OffersSection() {
     <section className="relative py-24 px-6 md:px-16 bg-transparent text-[#FAFAFA]">
       {/* Header */}
       <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
-          Offers & Sales
+        <h2 style={{ fontFamily: 'Zoredo Blocker' }} className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
+          Offers <span className="text-[#FF3B30]" style={{ fontFamily: 'Zoredo Blocker Line' }}>&</span> Sales
         </h2>
         <p className="text-[#FAFAFA]/80 text-lg">Don’t miss exclusive drops & limited-time deals</p>
       </div>
