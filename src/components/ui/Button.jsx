@@ -2,8 +2,8 @@
 
 export default function SkewButton({
   children = 'Ravyn',
-  width = '6.5em',
-  height = '2.3em',
+  width = '130px',      // Use absolute px values
+  height = '46px',
   fontSize = '20px',
   className = '',
   style = {},
@@ -14,7 +14,7 @@ export default function SkewButton({
       className={`
         relative m-2
         bg-[#FF3B30] text-[#FAFAFA]
-        rounded-[0.625em] font-bold
+        rounded-[10px] font-bold
         cursor-pointer overflow-hidden group z-[1]
         transition-all duration-500
         ${className}
@@ -22,7 +22,6 @@ export default function SkewButton({
       style={{
         width,
         height,
-        fontSize,
         ...style,
       }}
       {...props}
@@ -30,11 +29,13 @@ export default function SkewButton({
       {/* Text */}
       <span
         className="
+        flex gap-1 items-center justify-center
           relative z-10
           transition-all duration-500 ease-in-out
           opacity-90 group-hover:opacity-100
           group-hover:text-[#121212]
         "
+        style={{ fontSize }} // Apply font size only here
       >
         {children}
       </span>

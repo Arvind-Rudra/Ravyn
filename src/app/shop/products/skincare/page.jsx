@@ -103,7 +103,7 @@ export default function Makeup() {
             <div className="flex items-center justify-center gap-2 mb-4">
               <Sparkles className="text-[#FFD500] animate-pulse" size={24} />
               <h1 style={{ fontFamily: 'Zoredo Blocker' }} className="text-6xl font-black text-[#FAFAFA] tracking-tight">
-                Makeup <span className="text-[#FFD500]">Magic</span>
+                Makeup <span style={{ fontFamily: 'Zoredo Blocker Line' }} className="text-[#FFD500]">Magic</span>
               </h1>
               <Zap className="text-[#FFD500] animate-pulse" size={24} />
             </div>

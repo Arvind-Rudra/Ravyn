@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { User, Mail, Phone, MapPin, Lock, Eye, EyeOff, Shield, Zap, Upload, Check, AlertCircle } from 'lucide-react';
+import SkewButton from '@/components/ui/Button';
+import SecondaryButton from '@/components/ui/SecondaryButton';
 
 export default function Signup  ()  {
   const [formData, setFormData] = useState({
@@ -125,12 +127,10 @@ export default function Signup  ()  {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 mb-4">
-            <Zap className="w-8 h-8" style={{ color: '#FFD500' }} />
-            <h1 className="text-3xl font-bold text-white tracking-wider">
-              NEURAL LINK
-            </h1>
+          <h1 style={{ fontFamily: 'Zoredo Blocker' }} className="text-4xl font-bold text-white mb-2 tracking-wider">
+             <span style={{ fontFamily: 'Zoredo Blocker Line' }}>USER</span> REGISTRATION
+          </h1>
           </div>
-          <p className="text-gray-400">Join the cybernetic revolution</p>
           <div className="w-16 h-1 mx-auto mt-2" style={{ backgroundColor: '#FFD500' }}></div>
         </div>
 
@@ -161,30 +161,7 @@ export default function Signup  ()  {
             <div className="space-y-6">
               {step === 1 ? (
                 <>
-                  {/* Avatar Upload */}
-                  <div className="text-center mb-6">
-                    <div className="relative inline-block">
-                      <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-gray-700 mx-auto mb-2">
-                        {formData.avatar ? (
-                          <img src={formData.avatar} alt="Avatar" className="w-full h-full object-cover" />
-                        ) : (
-                          <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-                            <User className="w-8 h-8 text-gray-600" />
-                          </div>
-                        )}
-                      </div>
-                      <label className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full cursor-pointer flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110" style={{ backgroundColor: '#FFD500' }}>
-                        <Upload className="w-4 h-4 text-black" />
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleFileUpload}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    <p className="text-gray-400 text-sm">Upload Avatar</p>
-                  </div>
+                 
 
                   {/* Name Fields */}
                   <div className="grid grid-cols-2 gap-4">
@@ -297,14 +274,17 @@ export default function Signup  ()  {
                     )}
                   </div>
 
-                  <button
-                    type="button"
+                  <div className="flex justify-center items-center ">
+                  <SkewButton
+                    width={'350px'}
                     onClick={handleNext}
-                    className="w-full py-3 rounded-lg font-bold text-white transition-all duration-300 hover:shadow-lg hover:scale-105"
-                    style={{ backgroundColor: '#3D5AFE' }}
+                    className=" w-full text-center"
+                    style={{ backgroundColor: '#FF3B30' }}
                   >
-                    CONTINUE TO SECURITY
-                  </button>
+                    NEXT
+                  </SkewButton>
+                  </div>
+                  
                 </>
               ) : (
                 <>
@@ -389,29 +369,24 @@ export default function Signup  ()  {
                   </div>
 
                   <div className="flex gap-4">
-                    <button
-                      type="button"
+                    <SecondaryButton
+                      width={'200px'}
                       onClick={() => setStep(1)}
-                      className="flex-1 py-3 rounded-lg font-bold text-white border border-gray-600 hover:border-gray-500 transition-all duration-300"
+                      className="w-full text-center"
+                      
                     >
                       BACK
-                    </button>
-                    <button
-                      type="button"
+                    </SecondaryButton>
+                    <SkewButton
+                      width={'200px'}
                       onClick={handleSubmit}
                       disabled={isLoading}
-                      className="flex-1 py-3 rounded-lg font-bold text-white transition-all duration-300 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                      style={{ backgroundColor: '#3D5AFE' }}
+                      className="w-full text-center"
+                      style={{ backgroundColor: '#FF3B30' }}
                     >
-                      {isLoading ? (
-                        <>
-                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          CONNECTING...
-                        </>
-                      ) : (
-                        'JOIN THE GRID'
-                      )}
-                    </button>
+                      {isLoading ? 'LOADING...' : 'SUBMIT'}
+                    </SkewButton>
+                       
                   </div>
                 </>
               )}
@@ -421,9 +396,9 @@ export default function Signup  ()  {
           {/* Footer */}
           <div className="px-8 py-4 border-t border-gray-800 bg-black/20">
             <p className="text-center text-gray-500 text-sm">
-              Already have neural access? 
+              Already have an account? 
               <button className="ml-2 font-medium hover:text-white transition-colors" style={{ color: '#FFD500' }}>
-                Connect Here
+                Login Here
               </button>
             </p>
           </div>
