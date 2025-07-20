@@ -31,8 +31,8 @@ const categories = [
 export default function FeaturedSection() {
   return (
     <section className="py-20 px-4 md:px-16 bg-transparent text-[#FAFAFA]">
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-extrabold mb-2">Explore Our Categories</h2>
+      <div  className="text-center mb-12">
+        <h2 style={{ fontFamily: 'Zoredo Blocker' }} className="text-4xl  font-extrabold mb-2">Explore <span  className="text-[#FF3B30]" style={{ fontFamily: 'Zoredo Blocker Line' }} >Our</span> Categories</h2>
         <p className="text-[#888]">Curated for your vibe</p>
       </div>
 
@@ -55,7 +55,7 @@ export default function FeaturedSection() {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-2xl font-bold mb-2" style={{ color: cat.color }}>
+                <h3 className="text-2xl font-bold mb-2" style={{ color: cat.color, fontFamily: 'Zoredo Blocker' }}>
                   {cat.title}
                 </h3>
                 <p className="text-sm text-[#CFCFCF]">{cat.description}</p>

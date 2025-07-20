@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import Image from 'next/image';
 import SkewButton from '../ui/Button';
@@ -12,17 +12,24 @@ export default function HeroSection() {
   const imageWrapperRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    // Floating animation on image wrapper
-    gsap.to(imageWrapperRef.current, {
-      y: -10,
-      duration: 2.5,
-      repeat: -1,
-      yoyo: true,
-      ease: 'power1.inOut',
-    });
+  // Continuous floating animation — only runs once
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.to(imageWrapperRef.current, {
+        x: 10,
+        y: 0,
+        duration: 4,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+    }, imageWrapperRef);
 
-    // Looping image fade animation
+    return () => ctx.revert();
+  }, []);
+
+  // Looping image swap
+  useLayoutEffect(() => {
     const interval = setInterval(() => {
       gsap.to(imageWrapperRef.current.children[currentIndex], {
         opacity: 0,
@@ -44,7 +51,7 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-[90vh] flex flex-col md:flex-row items-center justify-between px-6 md:px-16 py-20 bg-transparent text-[#FAFAFA] overflow-hidden">
-      {/* Static Text Content */}
+      {/* Text Section */}
       <div className="z-10 max-w-xl space-y-6 text-center md:text-left">
         <h1 style={{ fontFamily: 'Zoredo Blocker' }} className="text-5xl md:text-7xl font-extrabold leading-tight">
           Be Bold, <br />
@@ -60,10 +67,10 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Hero Image Carousel */}
+      {/* Floating Image Section */}
       <div
         ref={imageWrapperRef}
-        className="relative w-[320px] h-[450px] md:w-[450px] md:h-[500px] mt-10 md:mt-0 rounded-3xl overflow-hidden shadow-2xl"
+        className="relative w-[320px] h-[450px] md:w-[450px] md:h-[500px] mt-16 md:mt-0 rounded-3xl overflow-hidden"
       >
         {IMAGES.map((src, idx) => (
           <Image

@@ -10,7 +10,6 @@ import Silk from '@/components/background/Silk';
 import HeroSection from '@/components/layout/Hero';
 import FeaturedSection from '@/components/layout/FeaturedSection';
 import OffersSection from '@/components/layout/OffersSection';
-import SignupPromptSection from '@/components/ui/SignupLoginPopup';
 
 export default function Home() {
   const texts = [
@@ -112,7 +111,7 @@ export default function Home() {
 
           {/* Main Content */}
             <HeroSection />
-            <SignupPromptSection />
+  
             <div className="px-4 md:px-16">
               <FeaturedSection />
             </div>

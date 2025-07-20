@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { Mail, Lock, Eye, EyeOff, Zap, AlertCircle, Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -124,6 +125,8 @@ export default function Login() {
             <div className="relative">
               <Zap className="w-10 h-10 text-[var(--color-cyberyellow)]" />
               <div className="absolute inset-0 w-10 h-10 rounded-full animate-ping bg-[var(--color-cyberyellow)] opacity-30"></div>
+              <Zap className="w-10 h-10 text-[var(--color-cyberyellow)]" />
+              <div className="absolute inset-0 w-10 h-10 rounded-full animate-ping bg-[var(--color-cyberyellow)] opacity-30"></div>
             </div>
             <h1
               className="text-4xl font-bold text-[var(--color-typography)] tracking-wider"
@@ -133,14 +136,19 @@ export default function Login() {
             </h1>
           </div>
           <div className="w-20 h-1 mx-auto bg-[var(--color-cyberyellow)]"></div>
+          <div className="w-20 h-1 mx-auto bg-[var(--color-cyberyellow)]"></div>
         </div>
 
+        <div className="bg-[var(--color-jetblack)]/40 backdrop-blur-sm rounded-lg border border-gray-800 shadow-2xl overflow-hidden">
         <div className="bg-[var(--color-jetblack)]/40 backdrop-blur-sm rounded-lg border border-gray-800 shadow-2xl overflow-hidden">
           <div className="p-8 space-y-6">
 
             {errors.general && (
               <div className="p-4 rounded-lg border border-[var(--color-electricred)]/50 bg-[var(--color-electricred)]/10">
+              <div className="p-4 rounded-lg border border-[var(--color-electricred)]/50 bg-[var(--color-electricred)]/10">
                 <div className="flex items-center gap-2">
+                  <AlertCircle className="w-5 h-5 text-[var(--color-electricred)]" />
+                  <p className="text-[var(--color-electricred)] text-sm font-medium">{errors.general}</p>
                   <AlertCircle className="w-5 h-5 text-[var(--color-electricred)]" />
                   <p className="text-[var(--color-electricred)] text-sm font-medium">{errors.general}</p>
                 </div>
@@ -158,6 +166,7 @@ export default function Login() {
                 disabled={isLocked}
               />
               {errors.email && (
+                <p className="text-[var(--color-electricred)] text-sm mt-1 flex items-center gap-1">
                 <p className="text-[var(--color-electricred)] text-sm mt-1 flex items-center gap-1">
                   <AlertCircle className="w-4 h-4" />
                   {errors.email}
@@ -181,6 +190,7 @@ export default function Login() {
                 }
               />
               {errors.password && (
+                <p className="text-[var(--color-electricred)] text-sm mt-1 flex items-center gap-1">
                 <p className="text-[var(--color-electricred)] text-sm mt-1 flex items-center gap-1">
                   <AlertCircle className="w-4 h-4" />
                   {errors.password}
@@ -246,6 +256,7 @@ export default function Login() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }
