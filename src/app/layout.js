@@ -1,6 +1,7 @@
 import Sidebar from "@/components/layout/Sidebar";
 import "./globals.css";
 import Particles from "@/components/background/Particals";
+import ClientProvider from "@/components/ClientProvider";
 
 export const metadata = {
   title: "Create Next App",
@@ -24,11 +25,12 @@ export default function RootLayout({ children }) {
           />
         </div>
 
-        {/* Main Content */}
-        <div className="relative z-10 md:ml-16">
-          <Sidebar />
-          {children}
-        </div>
+        <ClientProvider>
+          <div className="relative z-10 md:ml-16">
+            <Sidebar />
+            {children}
+          </div>
+        </ClientProvider>
       </body>
     </html>
   );

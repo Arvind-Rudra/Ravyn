@@ -3,68 +3,32 @@ import React, { useState, useEffect } from 'react';
 import { Heart, ShoppingBag, Star, Zap, Sparkles, TrendingUp } from 'lucide-react';
 import Particles from '@/components/background/Particals';
 import ProductCard from '@/components/layout/ProductCard';
-
-const products = [
-  {
-    id: 101,
-    name: 'Cyberpunk Shades',
-    price: '₹899',
-    originalPrice: '₹1,299',
-    image: '/accessories/glasses.jpeg',
-    rating: 4.7,
-    reviews: 112,
-    isNew: true,
-    isTrending: true,
-    colors: ['#000000', '#FF3B30', '#FAFAFA'],
-    category: 'Eyewear',
-  },
-  {
-    id: 102,
-    name: 'Metallic Choker Necklace',
-    price: '₹599',
-    originalPrice: '₹999',
-    image: '/accessories/choker.jpeg',
-    rating: 4.5,
-    reviews: 76,
-    isNew: false,
-    isTrending: true,
-    colors: ['#C0C0C0', '#FFD500'],
-    category: 'Neckwear',
-  },
-  {
-    id: 103,
-    name: 'Stacked Cyber Rings',
-    price: '₹499',
-    originalPrice: '₹799',
-    image: '/accessories/rings.jpeg',
-    rating: 4.6,
-    reviews: 89,
-    isNew: false,
-    isTrending: false,
-    colors: ['#AAAAAA', '#FFD700', '#333333'],
-    category: 'Jewelry',
-  },
-  {
-    id: 104,
-    name: 'Neon Crossbody Bag',
-    price: '₹1,299',
-    originalPrice: '₹1,899',
-    image: '/accessories/bag.jpeg',
-    rating: 4.8,
-    reviews: 141,
-    isNew: true,
-    isTrending: false,
-    category: 'Bags',
-  },
-];
+import axios from 'axios';
+import Link from 'next/link';
 
 export default function Accessories() {
   const [hoveredProduct, setHoveredProduct] = useState(null);
   const [favorites, setFavorites] = useState(new Set());
   const [isLoaded, setIsLoaded] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
   useEffect(() => {
     setIsLoaded(true);
+
+    // Fetch accessories products from API
+    async function fetchAccessoriesProducts() {
+      setLoadingProducts(true);
+      try {
+        const res = await axios.get('/api/categories/accessories');
+        setProducts(res.data.products || []);
+      } catch (e) {
+        setProducts([]);
+      }
+      setLoadingProducts(false);
+    }
+
+    fetchAccessoriesProducts();
   }, []);
 
   const toggleFavorite = (productId) => {
@@ -82,18 +46,7 @@ export default function Accessories() {
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Animated Background */}
-      <div className="fixed inset-0 -z-10">
-        <Particles
-          particleColors={['#FAFAFA', '#FAFAFA']}
-          particleCount={200}
-          particleSpread={10}
-          speed={0.1}
-          particleBaseSize={100}
-          moveParticlesOnHover
-          alphaParticles={false}
-          disableRotation={false}
-        />
-      </div>
+     
 
       <div className="relative z-10 md:ml-16">
         <div className="absolute inset-0 bg-gradient-to-br from-[#121212]/80 via-transparent to-[#121212]/80" />
@@ -114,20 +67,32 @@ export default function Accessories() {
           </div>
 
           {/* Grid */}
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {products.map((product, index) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                isLoaded={isLoaded}
-                index={index}
-                hoveredProduct={hoveredProduct}
-                setHoveredProduct={setHoveredProduct}
-                favorites={favorites}
-                toggleFavorite={toggleFavorite}
-              />
-            ))}
-          </div>
+          {loadingProducts ? (
+            <div className="text-center text-[#FFD500] text-lg py-12">Loading accessories...</div>
+          ) : products.length === 0 ? (
+            <div className="text-center text-[#FFD500] text-lg py-12">No accessories found.</div>
+          ) : (
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {products.map((product, index) => (
+                <Link
+                  key={product._id || product.id}
+                  href={`/shop/products/${product._id || product.id}`}
+                  className="block"
+                  style={{ textDecoration: 'none' }}
+                >
+                  <ProductCard
+                    product={product}
+                    isLoaded={isLoaded}
+                    index={index}
+                    hoveredProduct={hoveredProduct}
+                    setHoveredProduct={setHoveredProduct}
+                    favorites={favorites}
+                    toggleFavorite={toggleFavorite}
+                  />
+                </Link>
+              ))}
+            </div>
+          )}
 
           {/* CTA */}
           <div className="text-center mt-20">

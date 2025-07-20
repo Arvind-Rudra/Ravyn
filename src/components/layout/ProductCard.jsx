@@ -94,7 +94,7 @@ export default function ProductCard({
                         {product.originalPrice}
                     </span>
                     <span className="text-xs bg-[#FF3B30] text-[#FAFAFA] px-2 py-1 rounded-full">
-                        {Math.round(((parseInt(product.originalPrice.replace('₹', '').replace(',', '')) - parseInt(product.price.replace('₹', '').replace(',', ''))) / parseInt(product.originalPrice.replace('₹', '').replace(',', ''))) * 100)}% OFF
+                        ₹ {Math.round(((parseInt(product.originalPrice) - parseInt(product.price)) / parseInt(product.originalPrice)) * 100)}% OFF
                     </span>
                 </div>
             </div>
