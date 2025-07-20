@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Mail, Lock, Eye, EyeOff, Zap, Shield, AlertCircle, Check, User, Fingerprint } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Zap, AlertCircle, Check } from 'lucide-react';
 import SkewButton from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 
@@ -18,7 +18,6 @@ export default function Login() {
   const [loginAttempts, setLoginAttempts] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
   const [lockTimeRemaining, setLockTimeRemaining] = useState(0);
-  const [biometricAvailable, setBiometricAvailable] = useState(true);
 
   useEffect(() => {
     if (isLocked && lockTimeRemaining > 0) {
@@ -75,15 +74,13 @@ export default function Login() {
     }
   };
 
-  const handleBiometricLogin = async () => {
-    setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsLoading(false);
-    alert('Biometric scan successful! Neural link established.');
-  };
-
   const handleForgotPassword = () => {
     alert('Password reset link sent to your neural interface!');
+  };
+
+  const handleGoogleSignIn = () => {
+    alert('Redirecting to Google Sign-In...');
+    // Add your Google Sign-In logic here
   };
 
   return (
@@ -92,23 +89,23 @@ export default function Login() {
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-3 mb-4">
             <div className="relative">
-              <Zap className="w-10 h-10" style={{ color: '#FFD500' }} />
-              <div className="absolute inset-0 w-10 h-10 rounded-full animate-ping" style={{ backgroundColor: '#FFD500', opacity: 0.3 }}></div>
+              <Zap className="w-10 h-10 text-[var(--color-cyberyellow)]" />
+              <div className="absolute inset-0 w-10 h-10 rounded-full animate-ping bg-[var(--color-cyberyellow)] opacity-30"></div>
             </div>
-            <h1 className="text-4xl font-bold text-white tracking-wider">NEURAL ACCESS</h1>
+            <h1 className="text-4xl font-bold text-[var(--color-typography)] tracking-wider">
+              NEURAL ACCESS
+            </h1>
           </div>
-          <div className="w-20 h-1 mx-auto" style={{ backgroundColor: '#FFD500' }}></div>
+          <div className="w-20 h-1 mx-auto bg-[var(--color-cyberyellow)]"></div>
         </div>
 
-
-
-        <div className="bg-black/40 backdrop-blur-sm rounded-lg border border-gray-800 shadow-2xl overflow-hidden">
+        <div className="bg-[var(--color-jetblack)]/40 backdrop-blur-sm rounded-lg border border-gray-800 shadow-2xl overflow-hidden">
           <div className="p-8 space-y-6">
             {errors.general && (
-              <div className="p-4 rounded-lg border border-red-500/50 bg-red-500/10">
+              <div className="p-4 rounded-lg border border-[var(--color-electricred)]/50 bg-[var(--color-electricred)]/10">
                 <div className="flex items-center gap-2">
-                  <AlertCircle className="w-5 h-5 text-red-400" />
-                  <p className="text-red-400 text-sm font-medium">{errors.general}</p>
+                  <AlertCircle className="w-5 h-5 text-[var(--color-electricred)]" />
+                  <p className="text-[var(--color-electricred)] text-sm font-medium">{errors.general}</p>
                 </div>
               </div>
             )}
@@ -124,7 +121,7 @@ export default function Login() {
                 disabled={isLocked}
               />
               {errors.email && (
-                <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                <p className="text-[var(--color-electricred)] text-sm mt-1 flex items-center gap-1">
                   <AlertCircle className="w-4 h-4" />
                   {errors.email}
                 </p>
@@ -147,7 +144,7 @@ export default function Login() {
                 }
               />
               {errors.password && (
-                <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                <p className="text-[var(--color-electricred)] text-sm mt-1 flex items-center gap-1">
                   <AlertCircle className="w-4 h-4" />
                   {errors.password}
                 </p>
@@ -163,7 +160,11 @@ export default function Login() {
                   disabled={isLocked}
                   className="sr-only"
                 />
-                <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all duration-300 ${formData.rememberMe ? 'border-yellow-500 bg-yellow-500' : 'border-gray-600'}`}>
+                <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all duration-300 ${
+                  formData.rememberMe
+                    ? 'border-[var(--color-cyberyellow)] bg-[var(--color-cyberyellow)]'
+                    : 'border-gray-600'
+                }`}>
                   {formData.rememberMe && <Check className="w-3 h-3 text-black" />}
                 </div>
                 <span className="text-gray-400 text-sm">Remember neural pattern</span>
@@ -172,24 +173,35 @@ export default function Login() {
                 type="button"
                 onClick={handleForgotPassword}
                 disabled={isLocked}
-                className="text-sm font-medium transition-colors disabled:opacity-50"
-                style={{ color: '#FFD500' }}
+                className="text-sm font-medium transition-colors disabled:opacity-50 text-[var(--color-cyberyellow)]"
               >
                 Reset Access?
               </button>
             </div>
-              <div className='flex items-center justify-between'>
 
-            <SkewButton width={'350px'}
-              onClick={handleLogin} disabled={isLoading || isLocked} className="w-full text-center">
-              {isLocked ? `SYSTEM LOCKED (${lockTimeRemaining}s)` : isLoading ? 'CONNECTING...' : 'Login'}
-            </SkewButton>
+            <div className="flex items-center justify-center">
+              <SkewButton
+                width="350px"
+                onClick={handleLogin}
+                disabled={isLoading || isLocked}
+                className="w-full text-center"
+              >
+                {isLocked ? `SYSTEM LOCKED (${lockTimeRemaining}s)` : isLoading ? 'CONNECTING...' : 'Login'}
+              </SkewButton>
             </div>
 
-
+            {/* Sign in with Google */}
+            <div className="flex items-center justify-center mt-4">
+              <button
+                onClick={handleGoogleSignIn}
+                className="w-full py-2 px-4 bg-white text-black font-medium rounded-lg shadow-md hover:bg-gray-100 transition-colors"
+              >
+                Sign in with Google
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 }
